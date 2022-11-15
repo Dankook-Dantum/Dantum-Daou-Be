@@ -15,4 +15,9 @@ import javax.validation.constraints.Positive;
 public class UserController {
     private final UserService userService;
 
+    @GetMapping("/users/{userIdx}")
+    public ResponseEntity<Object> getUser(@PathVariable("userIdx") Long userIdx) {
+        return userService.getUser(userIdx);
+    }
+
 }
