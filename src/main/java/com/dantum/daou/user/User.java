@@ -1,6 +1,7 @@
 package com.dantum.daou.user;
 
 
+import com.dantum.daou.Stack.Stack;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,16 +25,15 @@ public class User {
     @Id
     @Column(name="user_idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_idx;
+    private Long userIdx;
 
     @NotNull
     @Column(name="name")
     private String name;
 
-
     @NotNull
     @Column(name="profile_url")
-    private String profile_url;
+    private String profileUrl;
 
     @NotNull
     @Column(name="email")
@@ -49,16 +49,13 @@ public class User {
 
     @NotNull
     @Column(name="office")
-    private String description;
+    private String office;
 
     @Column(name="office_number")
-    private String office_number;
+    private String officeNumber;
 
     @Column(name="introduce")
     private String introduce;
-
-    @Column(name="stack_idx")
-    private Long stack_idx;
 
     @Column(name="mbti")
     private String mbti;
@@ -72,53 +69,21 @@ public class User {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name="status")
-    private int status;
-
-
-
-
-
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     @BatchSize(size = 100)
-    private List<Post> posts = new ArrayList<>();
+    private List<Stack> stacks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @BatchSize(size = 100)
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @BatchSize(size = 100)
-    private List<File> files = new ArrayList<>();
-
-    @Builder(builderMethodName = "builderForSignIn")
-    public User(String encodedNickname, String encodedEmail, String password, short authType, String profileUrl, SocialLogin socialLogin) {
-        Assert.notNull(encodedNickname, "nickname must not be null");
-        Assert.notNull(password, "password must not be null");
-        Assert.notNull(authType, "auth_type must not be null");
-        Assert.notNull(profileUrl, "profile_url must not be null");
-
-        this.nickname = encodedNickname;
-        this.email = encodedEmail;
-        this.password = password;
-        this.authType = authType;
+    @Builder
+    public User(String name, String profileUrl, String email, String phone, String rank, String office, String officeNumber, String introduce, String mbti) {
+        this.name = name;
         this.profileUrl = profileUrl;
-        this.socialLogin = socialLogin;
+        this.email = email;
+        this.phone = phone;
+        this.rank = rank;
+        this.office = office;
+        this.officeNumber = officeNumber;
+        this.introduce = introduce;
+        this.mbti = mbti;
     }
-
-    @Builder(builderMethodName = "builderForUpdate")
-    public User(String nickname, String description, String profileUrl, String backgroundUrl, String instagramAccount, String facebookAccount) {
-        this.nickname = nickname;
-        this.description = description;
-        this.profileUrl = profileUrl;
-        this.backgroundUrl = backgroundUrl;
-        this.instagramAccount = instagramAccount;
-        this.facebookAccount = facebookAccount;
-    }
-
-
-
 }
