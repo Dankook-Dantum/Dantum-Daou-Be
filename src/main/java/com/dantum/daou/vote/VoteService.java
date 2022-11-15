@@ -11,6 +11,4 @@ public class VoteService {
 
     private final VoteRepository voteRepository;
 
-    @Transactional
-    public Long
 }
