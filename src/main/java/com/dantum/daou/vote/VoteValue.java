@@ -1,6 +1,5 @@
 package com.dantum.daou.vote;
 
-import com.dantum.daou.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,24 +13,17 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "vote")
-public class Vote {
+@Table(name = "voteValue")
+public class VoteValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vote_idx")
+    @Column(name = "votevalue_idx")
     @NotNull
-    private Long voteIdx;
-
-    @Column(name = "title")
-    private String title;
+    private Long votevalueIdx;
 
     @Column(name = "type")
-
     private int type;
-
-    @Column(name = "identifier")
-    private int identifier;
 
 
     @NotNull
@@ -39,22 +31,13 @@ public class Vote {
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Column(name="updated_at")
-    private LocalDateTime updatedAt;
-
-
-    // user_idx 외래키 작성 필요
-    @ManyToOne
-    @JoinColumn(name="user_idx")
-    private User user;
+    // vote_idx 외래키 작성 필요
 
     @Builder
-    public Vote(Long voteIdx, String title, int type, LocalDateTime createdAt,User user){
-        this.voteIdx = voteIdx;
-        this.title = title;
+    public VoteValue(Long votevalueIdx, int type, LocalDateTime createdAt){
+        this.votevalueIdx = votevalueIdx;
         this.type = type;
         this.createdAt = createdAt;
-        this.user = user;
+
     }
 }
