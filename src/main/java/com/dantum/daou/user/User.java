@@ -43,8 +43,8 @@ public class User {
     private String phone;
 
     @NotNull
-    @Column(name="rank")
-    private String rank;
+    @Column(name="position")
+    private String position;
 
     @NotNull
     @Column(name="office")
@@ -74,12 +74,12 @@ public class User {
     private List<Stack> stacks = new ArrayList<>();
 
     @Builder
-    public User(String name, String profileUrl, String email, String phone, String rank, String office, String officeNumber, String introduce, String mbti) {
+    public User(String name, String profileUrl, String email, String phone, String position, String office, String officeNumber, String introduce, String mbti) {
         this.name = name;
         this.profileUrl = profileUrl;
         this.email = email;
         this.phone = phone;
-        this.rank = rank;
+        this.position = position;
         this.office = office;
         this.officeNumber = officeNumber;
         this.introduce = introduce;
