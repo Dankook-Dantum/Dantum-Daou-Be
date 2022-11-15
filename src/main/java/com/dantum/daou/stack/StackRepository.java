@@ -1,4 +1,4 @@
-package com.dantum.daou.Stack;
+package com.dantum.daou.stack;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

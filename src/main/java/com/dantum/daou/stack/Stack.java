@@ -1,4 +1,4 @@
-package com.dantum.daou.Stack;
+package com.dantum.daou.stack;
 
 import com.dantum.daou.user.User;
 import com.sun.istack.NotNull;
