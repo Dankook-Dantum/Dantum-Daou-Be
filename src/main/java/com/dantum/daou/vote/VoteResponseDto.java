@@ -1,7 +1,10 @@
 package com.dantum.daou.vote;
 
 
+import com.dantum.daou.user.User;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 public class VoteResponseDto {
@@ -9,9 +12,14 @@ public class VoteResponseDto {
     private Long voteIdx;
     private String title;
 
+    private String name;
+
+    private LocalDateTime createdAt;
 
     public VoteResponseDto(Vote entity){
-        this.voteIdx = entity.getVoteIdx();
-        this.title = entity.getTitle();
+        this.voteIdx = entity.getVoteIdx();         // 투표 idx
+        this.title = entity.getTitle();             // 투표 명(내용)
+        this.name = entity.getUser().getName();     // 투표 작성자
+        this.createdAt = entity.getCreatedAt();
     }
 }

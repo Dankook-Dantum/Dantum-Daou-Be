@@ -14,16 +14,28 @@ public class VoteService {
 
     private final VoteRepository voteRepository;
 
+    private final VoteValueRepository voteValueRepository;
+
     @Transactional // 투표 생성
     public Long createVote(VoteCreateRequestDto createRequestDto){
         return voteRepository.save(createRequestDto.toEntity()).getVoteIdx();
     }
 
 
-    @Transactional(readOnly = true) // 투표 조회(예외처리 제외)
-    public List<VoteResponseDto> searchAllDesc(){
+    @Transactional(readOnly = true) // 투표 리스트 조회(예외처리 제외)
+    public List<VoteResponseDto> findAll(){
         return voteRepository.findAll().stream()
                 .map(VoteResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true) // 투표 상세 조회
+    public Vote findVote(Long voteIdx){
+         return voteRepository.findById(voteIdx)
+                 .orElseThrow(NullPointerException::new);
+    }
+
+    public List<VoteValue> findVoteValue(Vote vote){
+        return voteValueRepository.findByVote(vote);
     }
 }
