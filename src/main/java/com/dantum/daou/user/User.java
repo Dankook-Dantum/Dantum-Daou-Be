@@ -52,13 +52,10 @@ public class User {
     private String description;
 
     @Column(name="office_number")
-    private String office_number;
+    private String officeNumber;
 
     @Column(name="introduce")
     private String introduce;
-
-    @Column(name="stack_idx")
-    private Long stack_idx;
 
     @Column(name="mbti")
     private String mbti;
@@ -72,12 +69,11 @@ public class User {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name="status")
-    private int status;
 
 
 
-
+    @Column(name="stack_idx")
+    private Long stackIdx;
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
