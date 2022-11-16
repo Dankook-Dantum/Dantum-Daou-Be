@@ -9,23 +9,19 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class VoteCreateDto {
-
-    private Long userIdx;
     private String title;
-
-
+    private User user;
 
     @Builder
-    public VoteCreateDto(Long userIdx, String title){ // 리팩토링 예정 : 작성일 추가
-        this.userIdx = userIdx;
+    public VoteCreateDto(String title, User user){ // 리팩토링 예정 : 작성일 추가
         this.title = title;
-
+        this.user = user;
     }
 
     public Vote toEntity(){
         return Vote.builder()
-                .user(userIdx)
                 .title(title)
+                .user(user)
                 .build();
     }
 
