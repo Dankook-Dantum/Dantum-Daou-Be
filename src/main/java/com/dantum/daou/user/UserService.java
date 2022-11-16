@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
 
     public ResponseEntity<Object> getUser(Long userIdx) {
@@ -20,6 +19,15 @@ public class UserService {
                 .user(user).build();
 
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
+    }
+
+    public ResponseEntity<Object> getUserDetail(Long userIdx) {
+        User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
+
+        UserDetailDto userDetailDto = UserDetailDto.builder()
+                .user(user).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(userDetailDto);
     }
 
 
