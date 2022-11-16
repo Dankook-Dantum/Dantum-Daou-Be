@@ -1,13 +1,8 @@
 package com.dantum.daou.vote;
 
-
-import com.amazonaws.util.json.Jackson;
 import com.dantum.daou.user.User;
 import com.dantum.daou.user.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
