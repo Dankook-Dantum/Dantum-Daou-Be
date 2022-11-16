@@ -2,6 +2,7 @@ package com.dantum.daou.issue;
 
 
 import com.dantum.daou.user.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,19 +24,19 @@ public class Issue {
 
 
     // 이슈 제목
-    @NotNull
+
     @Column(name = "title")
     private String title;
 
     // 이슈 내용
-    @NotNull
+
     @Column(name = "content")
     private String content;
 
     // 이슈 라벨
     @NotNull
     @Column(name = "label")
-    private String label;
+    private int label;
 
     // user_idx : 외래키
     @ManyToOne
@@ -44,9 +45,16 @@ public class Issue {
 
 
     // 생성일
-
-    @NotNull
     @CreationTimestamp
     @Column(name="created_at")
     private LocalDateTime createdAt;
+
+
+    @Builder
+    public Issue(String title, String content, int label, User user){
+        this.title = title;
+        this.content = content;
+        this.label = label;
+        this.user = user;
+    }
 }
