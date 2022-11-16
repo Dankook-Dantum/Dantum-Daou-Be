@@ -21,11 +21,7 @@ public class UserDto {
     private String phone;
     private String office;
     private String officeNumber;
-    private String introduce;
-    private String mbti;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private List<Stack> stacks = new ArrayList<>();
+
 
     @Builder
     public UserDto(User user) {
