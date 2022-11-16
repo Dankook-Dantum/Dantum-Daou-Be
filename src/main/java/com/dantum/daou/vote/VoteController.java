@@ -2,6 +2,7 @@ package com.dantum.daou.vote;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class VoteController {
-
     private final VoteService voteService;
-
 
     @GetMapping("/votes/{userIdx}") // 투표 리스트 조회
     public List<VoteResponseDto> findAll(){
@@ -24,11 +23,9 @@ public class VoteController {
         return voteService.findVote(voteIdx);
     }
 
-
-
     @PostMapping("/votes/{userIdx}")  // 투표 생성
-    public Long createVote(@PathVariable(name = "userIdx") Long userIdx, @RequestBody ){
-        return voteService.createVote(createRequestDto);
+    public ResponseEntity<Object> createVote(@PathVariable(name = "userIdx") Long userIdx, @RequestBody VoteRequestDto requestDto){
+        return voteService.createVote(userIdx, requestDto);
     }
 
 }
