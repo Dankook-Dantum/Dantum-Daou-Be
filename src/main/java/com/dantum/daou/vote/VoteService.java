@@ -1,6 +1,8 @@
 package com.dantum.daou.vote;
 
 
+import com.dantum.daou.user.User;
+import com.dantum.daou.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +14,14 @@ import java.util.stream.Collectors;
 @Service
 public class VoteService {
 
+    private final UserRepository userRepository;
     private final VoteRepository voteRepository;
 
     private final VoteValueRepository voteValueRepository;
 
     @Transactional // 투표 생성
-    public Long createVote(VoteCreateRequestDto createRequestDto){
+    public Long createVote(Long userIdx){
+        User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
         return voteRepository.save(createRequestDto.toEntity()).getVoteIdx();
     }
 
@@ -35,6 +39,7 @@ public class VoteService {
                  .orElseThrow(NullPointerException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<VoteValue> findVoteValue(Vote vote){
         return voteValueRepository.findByVote(vote);
     }

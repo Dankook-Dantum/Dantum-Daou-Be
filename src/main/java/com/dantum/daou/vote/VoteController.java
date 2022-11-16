@@ -27,7 +27,7 @@ public class VoteController {
 
 
     @PostMapping("/votes/{userIdx}")  // 투표 생성
-    public Long createVote(@RequestBody VoteCreateRequestDto createRequestDto){
+    public Long createVote(@PathVariable(name = "userIdx") Long userIdx, @RequestBody ){
         return voteService.createVote(createRequestDto);
     }
 
