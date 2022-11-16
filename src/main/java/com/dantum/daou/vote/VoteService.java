@@ -1,9 +1,15 @@
 package com.dantum.daou.vote;
 
 
+import com.amazonaws.util.json.Jackson;
 import com.dantum.daou.user.User;
 import com.dantum.daou.user.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +26,19 @@ public class VoteService {
     private final VoteValueRepository voteValueRepository;
 
     @Transactional // 투표 생성
-    public Long createVote(Long userIdx){
+    public ResponseEntity<Object> createVote(Long userIdx, VoteRequestDto requestDto){
         User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
-        return voteRepository.save(createRequestDto.toEntity()).getVoteIdx();
+        VoteCreateDto voteCreateDto = VoteCreateDto.builder()
+                .title(requestDto.getTitle())
+                .user(user)
+                .build();
+        Vote vote = voteCreateDto.toEntity();
+
+        voteRepository.save(vote);
+
+        JsonObject data = new JsonObject();
+        data.addProperty("message", "Create Vote Success");
+        return ResponseEntity.status(HttpStatus.CREATED).body(data);
     }
 
 
