@@ -12,7 +12,8 @@ import java.util.List;
 public class VoteController {
     private final VoteService voteService;
 
-    @GetMapping("/votes/{userIdx}") // 투표 리스트 조회
+    // 투표 리스트 조회
+    @GetMapping("/votes/{userIdx}")
     public List<VoteResponseDto> findAll(){
         return voteService.findAll();
     }

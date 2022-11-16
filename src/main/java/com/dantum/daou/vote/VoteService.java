@@ -36,9 +36,7 @@ public class VoteService {
 
         voteRepository.save(vote);
 
-        JsonObject data = new JsonObject();
-        data.addProperty("message", "Create Vote Success");
-        return ResponseEntity.status(HttpStatus.CREATED).body(data);
+        return ResponseEntity.status(HttpStatus.CREATED).body("create success");
     }
 
 
