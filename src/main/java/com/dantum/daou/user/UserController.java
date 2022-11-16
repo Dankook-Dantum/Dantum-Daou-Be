@@ -18,4 +18,9 @@ public class UserController {
         return userService.getUser(userIdx);
     }
 
+    @GetMapping("/users/detail/{userIdx}")
+    public ResponseEntity<Object> getDetailUser(@PathVariable("userIdx") Long userIdx) {
+        return userService.getUserDetail(userIdx);
+    }
+
 }
