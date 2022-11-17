@@ -1,5 +1,7 @@
 package com.dantum.daou.vote;
 
+import com.dantum.daou.voteValue.VoteValue;
+
 public class VoteDetailResponseDto {
     private Long voteIdx;
     private String title;

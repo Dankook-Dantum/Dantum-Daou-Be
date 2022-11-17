@@ -13,6 +13,7 @@ public class IssueResponseDto {
     private String name; // 작성자
 
     private String title;
+    private String labelName;
 
     private String content;
 
@@ -22,6 +23,7 @@ public class IssueResponseDto {
         this.issueIdx = entity.getIssueIdx();
         this.name = entity.getUser().getName();
         this.title = entity.getTitle();
+        this.labelName = LabelType.labelValueOfCode(entity.getLabel());
         this.content = entity.getContent();
         this.createdAt = entity.getCreatedAt();
     }
