@@ -16,10 +16,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class VoteService {
-
     private final UserRepository userRepository;
     private final VoteRepository voteRepository;
-
     private final VoteValueRepository voteValueRepository;
 
     @Transactional // 투표 생성
@@ -46,12 +44,20 @@ public class VoteService {
 
     @Transactional(readOnly = true) // 투표 상세 조회
     public Vote findVote(Long voteIdx){
-         return voteRepository.findById(voteIdx)
-                 .orElseThrow(NullPointerException::new);
+        return voteRepository.findById(voteIdx).orElseThrow(NullPointerException::new);
     }
 
     @Transactional(readOnly = true)
     public List<VoteValue> findVoteValue(Vote vote){
         return voteValueRepository.findByVote(vote);
+    }
+
+    public ResponseEntity<Object> showResponse(Long voteIdx) {
+        Vote vote = findVote(voteIdx);
+
+        VoteResponseDto voteResponseDto = VoteResponseDto.builder()
+                .entity(vote).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(voteResponseDto);
     }
 }
