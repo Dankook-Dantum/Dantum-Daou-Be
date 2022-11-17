@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class VoteValueService {
@@ -27,5 +29,16 @@ public class VoteValueService {
         voteValueRepository.save(voteValueCreateDto.toEntity());
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Create Success");
+    }
+
+    @Transactional
+    public ResponseEntity<Object> getVoteResult(Long voteIdx) {
+        Vote vote = voteService.findVote(voteIdx);
+        List<VoteValue> voteValueList = voteValueRepository.findByVote(vote);
+
+        VoteValueResponseDto voteValueResponseDto = VoteValueResponseDto.builder()
+                .voteValueList(voteValueList).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(voteValueResponseDto);
     }
 }
