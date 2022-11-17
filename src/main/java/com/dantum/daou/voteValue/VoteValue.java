@@ -1,7 +1,8 @@
-package com.dantum.daou.vote;
+package com.dantum.daou.voteValue;
 
 import com.dantum.daou.stack.Stack;
 import com.dantum.daou.user.User;
+import com.dantum.daou.vote.Vote;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,18 +22,14 @@ import java.util.List;
 @Entity
 @Table(name = "voteValue")
 public class VoteValue {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "votevalue_idx")
-    @NotNull
     private Long votevalueIdx;
 
     @Column(name = "type")
     private int type;
 
-
-    @NotNull
     @CreationTimestamp
     @Column(name="created_at")
     private LocalDateTime createdAt;
@@ -43,10 +40,8 @@ public class VoteValue {
     private Vote vote;
 
     @Builder
-    public VoteValue(Long votevalueIdx, int type, LocalDateTime createdAt, Vote vote){
-        this.votevalueIdx = votevalueIdx;
+    public VoteValue(int type,Vote vote){
         this.type = type;
-        this.createdAt = createdAt;
         this.vote = vote;
 
     }
