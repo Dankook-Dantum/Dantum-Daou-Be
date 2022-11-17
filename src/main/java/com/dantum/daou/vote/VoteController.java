@@ -20,8 +20,8 @@ public class VoteController {
 
     // 투표 상세 조회 api
     @GetMapping("/votes/details/{voteIdx}")
-    public Vote findVote(@PathVariable("voteIdx") Long voteIdx){
-        return voteService.findVote(voteIdx);
+    public ResponseEntity<Object> findVote(@PathVariable(name = "voteIdx") Long voteIdx){
+        return voteService.showResponse(voteIdx);
     }
 
     @PostMapping("/votes/{userIdx}")  // 투표 생성
