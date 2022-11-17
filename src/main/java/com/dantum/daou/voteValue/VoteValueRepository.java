@@ -1,9 +1,10 @@
-package com.dantum.daou.vote;
+package com.dantum.daou.voteValue;
 
+import com.dantum.daou.vote.Vote;
+import com.dantum.daou.voteValue.VoteValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface VoteValueRepository extends JpaRepository<VoteValue, Long> {
 
