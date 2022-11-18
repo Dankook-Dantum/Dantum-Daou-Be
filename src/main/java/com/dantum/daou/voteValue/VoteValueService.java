@@ -1,8 +1,6 @@
 package com.dantum.daou.voteValue;
 
 import com.dantum.daou.vote.Vote;
-import com.dantum.daou.vote.VoteCreateDto;
-import com.dantum.daou.vote.VoteRequestDto;
 import com.dantum.daou.vote.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

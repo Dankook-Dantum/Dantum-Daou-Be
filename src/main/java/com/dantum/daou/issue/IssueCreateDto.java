@@ -2,7 +2,6 @@ package com.dantum.daou.issue;
 
 
 import com.dantum.daou.user.User;
-import com.dantum.daou.vote.Vote;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

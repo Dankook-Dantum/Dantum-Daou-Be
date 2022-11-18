@@ -1,7 +1,6 @@
 package com.dantum.daou.voteValue;
 
 import com.dantum.daou.vote.Vote;
-import com.dantum.daou.voteValue.VoteValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
