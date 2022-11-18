@@ -29,6 +29,8 @@ dependencies {
     implementation 'mysql:mysql-connector-java'
     implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.4.2'
     implementation 'org.springframework.cloud:spring-cloud-aws:2.2.6.RELEASE'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 }
 
 tasks.named('test') {
