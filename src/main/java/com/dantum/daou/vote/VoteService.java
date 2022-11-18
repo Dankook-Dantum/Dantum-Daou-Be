@@ -1,5 +1,7 @@
 package com.dantum.daou.vote;
 
+import com.dantum.daou.exception.ResourceNotFoundException;
+import com.dantum.daou.issue.Issue;
 import com.dantum.daou.user.User;
 import com.dantum.daou.user.UserRepository;
 import com.dantum.daou.voteValue.VoteValue;
@@ -59,5 +61,14 @@ public class VoteService {
                 .entity(vote).build();
 
         return ResponseEntity.status(HttpStatus.OK).body(voteResponseDto);
+    }
+
+    // 투표 삭제
+    public ResponseEntity<Object> delete(Long id){
+        Vote vote = voteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Vote", "id",id));
+        voteRepository.delete(vote);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
     }
 }

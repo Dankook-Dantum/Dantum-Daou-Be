@@ -1,9 +1,11 @@
 package com.dantum.daou.issue;
 
 
+import com.dantum.daou.exception.ResourceNotFoundException;
 import com.dantum.daou.user.User;
 import com.dantum.daou.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class IssueService {
 
     private final UserRepository userRepository;
 
+    // 이슈 생성
     public ResponseEntity<Object> createIssue(Long userIdx, IssueRequestDto requestDto) {
         User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
         IssueCreateDto issueCreateDto = IssueCreateDto.builder()
@@ -38,12 +41,25 @@ public class IssueService {
         return ResponseEntity.status(HttpStatus.CREATED).body("create success");
     }
 
-        // 이슈 리스트 조회
-        public List<IssueResponseDto> findAll () {
-            return issueRepository.findAll().stream()
-                    .map(IssueResponseDto::new)
-                    .collect(Collectors.toList());
 
+
+
+
+    // 이슈 리스트 조회
+    public List<IssueResponseDto> findAll () {
+        return issueRepository.findAll().stream()
+                .map(IssueResponseDto::new)
+                .collect(Collectors.toList());
         }
+
+        // 이슈 삭제
+
+    public ResponseEntity<Object> delete(Long id){
+        Issue issue = issueRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Issue", "id",id));
+        issueRepository.delete(issue);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
     }
+}
 
