@@ -30,5 +30,18 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.OK).body(userDetailDto);
     }
 
+    public ResponseEntity<Object> updateUser(Long userIdx, UserRequestDto requestDto) {
+        User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
+
+        UserUpdateDto userUpdateDto = UserUpdateDto.builder()
+                .requestDto(requestDto).build();
+
+        user.update(userUpdateDto);
+
+        userRepository.save(user);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update success");
+    }
+
 
 }
