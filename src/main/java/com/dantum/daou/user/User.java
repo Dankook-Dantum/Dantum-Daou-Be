@@ -85,4 +85,18 @@ public class User {
         this.introduce = introduce;
         this.mbti = mbti;
     }
+
+    public void update(UserUpdateDto userUpdateDto) {
+        if (userUpdateDto.getName() != null) this.name = userUpdateDto.getName();
+        if (userUpdateDto.getProfileUrl() != null) this.profileUrl = userUpdateDto.getProfileUrl();
+        if (userUpdateDto.getEmail() != null) this.email = userUpdateDto.getEmail();
+        if (userUpdateDto.getPhone() != null) this.phone = userUpdateDto.getPhone();
+        if (userUpdateDto.getPosition() != null) this.position = userUpdateDto.getPosition();
+        if (userUpdateDto.getOffice() != null) this.office = userUpdateDto.getOffice();
+        if (userUpdateDto.getOfficeNumber() != null) this.officeNumber = userUpdateDto.getOfficeNumber();
+        if (userUpdateDto.getIntroduce() != null) this.introduce = userUpdateDto.getIntroduce();
+        if (userUpdateDto.getMbti() != null) this.mbti = userUpdateDto.getMbti();
+    }
+
+
 }
