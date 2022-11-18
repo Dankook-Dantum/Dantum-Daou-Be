@@ -26,7 +26,6 @@ public class VoteValue {
     @Column(name="created_at")
     private LocalDateTime createdAt;
 
-    // vote_idx 외래키 작성 필요
     @ManyToOne
     @JoinColumn(name="vote_idx")
     private Vote vote;

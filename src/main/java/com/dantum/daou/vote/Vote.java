@@ -1,15 +1,18 @@
 package com.dantum.daou.vote;
 
 import com.dantum.daou.user.User;
+import com.dantum.daou.voteValue.VoteValue;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
+
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -31,6 +34,9 @@ public class Vote {
     @ManyToOne
     @JoinColumn(name="user_idx")
     private User user;
+
+    @OneToMany(mappedBy = "vote", cascade = CascadeType.ALL)
+    private List<VoteValue> voteValueList = new ArrayList<VoteValue>();
 
     @Builder
     public Vote(String title, User user){

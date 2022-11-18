@@ -29,4 +29,10 @@ public class VoteController {
         return voteService.createVote(userIdx, requestDto);
     }
 
+    // 투표 삭제
+    @DeleteMapping("/votes/{voteIdx}")
+    public ResponseEntity<Object> deleteVote(@PathVariable(name = "voteIdx") Long voteIdx){
+        return voteService.delete(voteIdx);
+    }
+
 }
