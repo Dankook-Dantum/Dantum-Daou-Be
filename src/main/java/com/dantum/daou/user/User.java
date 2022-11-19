@@ -33,7 +33,7 @@ public class User {
     @Column(name="name")
     private String name;
 
-    @NotNull
+
     @Column(name="profile_url")
     private String profileUrl;
 
@@ -42,14 +42,15 @@ public class User {
     private String email;
 
     @NotNull
+    @Column(name="password")
+    private String password;
+
     @Column(name="phone")
     private String phone;
 
-    @NotNull
     @Column(name="position")
     private String position;
 
-    @NotNull
     @Column(name="office")
     private String office;
 
@@ -87,11 +88,12 @@ public class User {
     @BatchSize(size = 100)
     private List<Vote> votes = new ArrayList<>();
 
-    @Builder
-    public User(String name, String profileUrl, String email, String phone, String position, String office, String officeNumber, String introduce, String mbti) {
+    @Builder(builderClassName = "builderForShow", builderMethodName = "builderForShow")
+    public User(String name, String profileUrl, String email, String password, String phone, String position, String office, String officeNumber, String introduce, String mbti) {
         this.name = name;
         this.profileUrl = profileUrl;
         this.email = email;
+        this.password = password;
         this.phone = phone;
         this.position = position;
         this.office = office;
@@ -100,10 +102,18 @@ public class User {
         this.mbti = mbti;
     }
 
+    @Builder(builderClassName = "builderForCreate", builderMethodName = "builderForCreate")
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
     public void update(UserUpdateDto userUpdateDto) {
         if (userUpdateDto.getName() != null) this.name = userUpdateDto.getName();
         if (userUpdateDto.getProfileUrl() != null) this.profileUrl = userUpdateDto.getProfileUrl();
         if (userUpdateDto.getEmail() != null) this.email = userUpdateDto.getEmail();
+        if (userUpdateDto.getPosition() != null) this.password = userUpdateDto.getPassword();
         if (userUpdateDto.getPhone() != null) this.phone = userUpdateDto.getPhone();
         if (userUpdateDto.getPosition() != null) this.position = userUpdateDto.getPosition();
         if (userUpdateDto.getOffice() != null) this.office = userUpdateDto.getOffice();
