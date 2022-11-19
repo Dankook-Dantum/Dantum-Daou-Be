@@ -1,5 +1,7 @@
 package com.dantum.daou.user;
 
+import com.dantum.daou.exception.ResourceNotFoundException;
+import com.dantum.daou.vote.Vote;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +47,15 @@ public class UserService {
 
     public User findById(Long userIdx) {
         return userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
+    }
+
+    // 유저 삭제
+    public ResponseEntity<Object> delete(Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id",id));
+        userRepository.delete(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
     }
 
 

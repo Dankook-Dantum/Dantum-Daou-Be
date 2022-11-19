@@ -68,7 +68,7 @@ public class User {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @BatchSize(size = 100)
     private List<Stack> stacks = new ArrayList<>();

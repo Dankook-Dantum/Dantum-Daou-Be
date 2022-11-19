@@ -1,6 +1,8 @@
 package com.dantum.daou.stack;
 
 import com.dantum.daou.exception.DuplicateException;
+import com.dantum.daou.exception.ResourceNotFoundException;
+import com.dantum.daou.issue.Issue;
 import com.dantum.daou.user.User;
 import com.dantum.daou.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -12,20 +14,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class StackService {
     private final StackRepository stackRepository;
     private final UserService userService;
 
-    @Transactional
     public List<Stack> findByUser(Long userIdx) {
         User user = userService.findById(userIdx);
 
         return stackRepository.findAllByUser(user);
     }
 
-    @Transactional
+
     public ResponseEntity<Object> getStack(Long userIdx) {
         List<Stack> stackList = findByUser(userIdx);
         List<StackDto> stackDtoList = stackList.stream()
@@ -37,7 +39,7 @@ public class StackService {
         return ResponseEntity.status(HttpStatus.OK).body(stackDtoList);
     }
 
-    @Transactional
+
     public ResponseEntity<Object> createStack(Long userIdx, StackDto stackDto) {
         boolean isExist = stackRepository.existsByStack(stackDto.getStack());
 
@@ -61,4 +63,14 @@ public class StackService {
     public ResponseEntity<Object> updateStack(Long userIdx, StackDto stackDto) {
 
     }*/
+
+// 스택 삭제
+public ResponseEntity<Object> delete(Long id){
+    Stack stack = stackRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Stack", "id",id));
+    stackRepository.delete(stack);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
+}
+
 }
