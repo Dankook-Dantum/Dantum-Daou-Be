@@ -4,6 +4,7 @@ package com.dantum.daou.user;
 import com.dantum.daou.issue.Issue;
 import com.dantum.daou.stack.Stack;
 import com.dantum.daou.vote.Vote;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -70,7 +71,8 @@ public class User {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude
     @BatchSize(size = 100)
     private List<Stack> stacks = new ArrayList<>();

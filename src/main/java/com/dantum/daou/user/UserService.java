@@ -65,11 +65,10 @@ public class UserService {
     // 유저 삭제
     public ResponseEntity<Object> delete(Long id){
 
-
-
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id",id));
 
+        // User 외래키 관련 Entity 삭제
         List<Stack> stackList = user.getStacks();
         List<Issue> issueList = user.getIssues();
         List<Vote> voteList = user.getVotes();
@@ -78,7 +77,7 @@ public class UserService {
         issueRepository.deleteAll(issueList);
         voteRepository.deleteAll(voteList);
 
-
+        // User 삭제
         userRepository.delete(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("delete success");

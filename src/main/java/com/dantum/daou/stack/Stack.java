@@ -1,6 +1,7 @@
 package com.dantum.daou.stack;
 
 import com.dantum.daou.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class Stack {
     @Column(name="updated_at")
     private LocalDateTime updatedAt;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="user_idx")
     private User user;
