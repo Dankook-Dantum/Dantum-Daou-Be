@@ -1,5 +1,6 @@
 package com.dantum.daou.vote;
 
+import com.dantum.daou.exception.CustomException;
 import com.dantum.daou.exception.ResourceNotFoundException;
 import com.dantum.daou.issue.Issue;
 import com.dantum.daou.user.User;
@@ -14,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.dantum.daou.exception.ErrorCode.NOT_EXIST_USER;
+import static com.dantum.daou.exception.ErrorCode.NOT_EXIST_VOTE;
 
 @RequiredArgsConstructor
 @Service
@@ -46,7 +50,7 @@ public class VoteService {
 
     @Transactional(readOnly = true) // 투표 상세 조회
     public Vote findVote(Long voteIdx){
-        return voteRepository.findById(voteIdx).orElseThrow(NullPointerException::new);
+        return voteRepository.findById(voteIdx).orElse(null);
     }
 
     @Transactional(readOnly = true)
@@ -54,13 +58,16 @@ public class VoteService {
         return voteValueRepository.findByVote(vote);
     }
 
-    public ResponseEntity<Object> showResponse(Long voteIdx) {
+    public ResponseEntity<Object> showResponse(Long voteIdx) throws CustomException {
         Vote vote = findVote(voteIdx);
-
-        VoteResponseDto voteResponseDto = VoteResponseDto.builder()
-                .entity(vote).build();
-
-        return ResponseEntity.status(HttpStatus.OK).body(voteResponseDto);
+        if (vote == null){
+            throw new CustomException(NOT_EXIST_VOTE);
+        }
+        else {
+            VoteResponseDto voteResponseDto = VoteResponseDto.builder()
+                    .entity(vote).build();
+            return ResponseEntity.status(HttpStatus.OK).body(voteResponseDto);
+        }
     }
 
     // 투표 삭제

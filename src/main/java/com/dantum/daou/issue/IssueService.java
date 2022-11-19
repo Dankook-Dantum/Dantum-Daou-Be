@@ -1,6 +1,7 @@
 package com.dantum.daou.issue;
 
 
+import com.dantum.daou.exception.CustomException;
 import com.dantum.daou.exception.ResourceNotFoundException;
 import com.dantum.daou.user.User;
 import com.dantum.daou.user.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.dantum.daou.exception.ErrorCode.NOT_EXIST_ISSUE;
 
 
 @Transactional
@@ -42,11 +44,18 @@ public class IssueService {
     }
 
     // 이슈 리스트 조회
-    public List<IssueResponseDto> findAll () {
-        return issueRepository.findAll().stream()
+    public List<IssueResponseDto> findAll () throws CustomException {
+
+        List<IssueResponseDto> issueList = issueRepository.findAll().stream()
                 .map(IssueResponseDto::new)
                 .collect(Collectors.toList());
+
+        if (issueList.size() == 0) {  // 이슈가 없다면
+            throw new CustomException(NOT_EXIST_ISSUE);
+        } else {
+            return issueList;
         }
+    }
 
     // 이슈 삭제
     public ResponseEntity<Object> delete(Long id){
@@ -57,14 +66,17 @@ public class IssueService {
         return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
     }
 
-    public ResponseEntity<Object> updateIssue(Long issueIdx, IssueRequestDto requestDto) {
-        Issue issue = issueRepository.findById(issueIdx).orElseThrow(NullPointerException::new);
+    public ResponseEntity<Object> updateIssue(Long issueIdx, IssueRequestDto requestDto) throws CustomException {
+        Issue issue = issueRepository.findById(issueIdx).orElse(null);
 
-        issue.update(requestDto);
-
-        issueRepository.save(issue);
-
-        return ResponseEntity.status(HttpStatus.OK).body("Update success");
+        if (issue == null) {  // 이슈가 없다면
+            throw new CustomException(NOT_EXIST_ISSUE);
+        }
+        else {
+            issue.update(requestDto);
+            issueRepository.save(issue);
+            return ResponseEntity.status(HttpStatus.OK).body("Update success");
+        }
     }
 }
 
