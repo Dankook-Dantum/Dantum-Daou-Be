@@ -20,9 +20,12 @@ public class StackController {
         return stackService.createStack(userIdx, stackDto);
     }
 
-/*    @PatchMapping("/{userIdx}")
-    public ResponseEntity<Object> updateStack(@PathVariable("userIdx") Long userIdx, @RequestBody StackDto stackDto) {
-        return stackService.updateStack(userIdx, stackDto);
-    }*/
+    @PatchMapping("/{userIdx}")
+    public ResponseEntity<Object> updateStack(
+            @PathVariable("userIdx") Long userIdx,
+            @RequestParam("stackIdx") Long stackIdx,
+            @RequestBody StackDto stackDto) {
+        return stackService.updateStack(userIdx, stackIdx, stackDto);
+    }
 
 }

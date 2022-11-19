@@ -57,8 +57,9 @@ public class StackService {
         return ResponseEntity.status(HttpStatus.CREATED).body("Create Success");
     }
 
-/*    @Transactional
-    public ResponseEntity<Object> updateStack(Long userIdx, StackDto stackDto) {
+    @Transactional
+    public ResponseEntity<Object> updateStack(Long userIdx, Long stackIdx, StackDto stackDto) {
 
-    }*/
+
+    }
 }
