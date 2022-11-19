@@ -10,6 +10,7 @@ public class UserUpdateDto {
     private String name;
     private String profileUrl;
     private String email;
+    private String password;
     private String phone;
     private String position;
     private String office;
@@ -22,6 +23,7 @@ public class UserUpdateDto {
         this.name = requestDto.getName();
         this.profileUrl = requestDto.getProfileUrl();
         this.email = requestDto.getEmail();
+        this.password = requestDto.getPassword();
         this.phone = requestDto.getPhone();
         this.position = requestDto.getPosition();
         this.office = requestDto.getOffice();
