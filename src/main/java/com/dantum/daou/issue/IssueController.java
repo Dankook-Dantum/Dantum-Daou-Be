@@ -21,19 +21,23 @@ public class IssueController {
         return issueService.findAll();
     }
 
-
     // 이슈 생성 api
     @PostMapping("/{userIdx}")
     public ResponseEntity<Object> createIssue(@PathVariable(name = "userIdx") Long userIdx, @RequestBody IssueRequestDto requestDto){
         return issueService.createIssue(userIdx, requestDto);
     }
 
-
-
     // 이슈 삭제
     @DeleteMapping("/{issueIdx}")
     public ResponseEntity<Object> deleteIssue(@PathVariable(name = "issueIdx") Long issueIdx){
         return issueService.delete(issueIdx);
+    }
+
+    @PatchMapping("/{issueIdx}")
+    public ResponseEntity<Object> updateIssue(
+            @PathVariable(name = "issueIdx") Long issueIdx,
+            @RequestBody IssueRequestDto requestDto) {
+        return issueService.updateIssue( issueIdx,requestDto);
     }
 
 }
