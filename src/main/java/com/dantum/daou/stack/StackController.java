@@ -28,4 +28,9 @@ public class StackController {
         return stackService.updateStack(userIdx, stackIdx, stackDto);
     }
 
+    // stack 삭제
+    @DeleteMapping("/{stackIdx}")
+    public ResponseEntity<Object> deleteStack(@PathVariable(name = "stackIdx") Long stackIdx){
+        return stackService.delete(stackIdx);
+    }
 }
