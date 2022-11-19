@@ -61,7 +61,16 @@ public class StackService {
 
     @Transactional
     public ResponseEntity<Object> updateStack(Long userIdx, Long stackIdx, StackDto stackDto) {
+        Stack stack = stackRepository.findById(stackIdx).orElseThrow(NullPointerException::new);
 
+        if (stack.getStack().equals(stackDto.getStack())) {
+            throw new DuplicateException("Stack", "stack", stackDto.getStack());
+        }
+
+        stack.update(stackDto);
+        stackRepository.save(stack);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
 
     // 스택 삭제
