@@ -57,4 +57,10 @@ public class Issue {
         this.label = label;
         this.user = user;
     }
+
+    public void update(IssueRequestDto requestDto) {
+        if (requestDto.getTitle() != null) this.title = requestDto.getTitle();
+        if (requestDto.getContent() != null) this.content = requestDto.getContent();
+        if (Integer.valueOf(requestDto.getLabel()) != null) this.label = requestDto.getLabel();
+    }
 }
