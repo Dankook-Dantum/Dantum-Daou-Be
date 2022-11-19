@@ -1,7 +1,9 @@
 package com.dantum.daou.user;
 
 
+import com.dantum.daou.issue.Issue;
 import com.dantum.daou.stack.Stack;
+import com.dantum.daou.vote.Vote;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -72,6 +74,16 @@ public class User {
     @ToString.Exclude
     @BatchSize(size = 100)
     private List<Stack> stacks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @BatchSize(size = 100)
+    private List<Issue> issues = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @BatchSize(size = 100)
+    private List<Vote> votes = new ArrayList<>();
 
     @Builder
     public User(String name, String profileUrl, String email, String phone, String position, String office, String officeNumber, String introduce, String mbti) {
