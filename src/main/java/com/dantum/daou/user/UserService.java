@@ -1,5 +1,6 @@
 package com.dantum.daou.user;
 
+import com.dantum.daou.exception.CustomException;
 import com.dantum.daou.exception.ResourceNotFoundException;
 import com.dantum.daou.issue.Issue;
 import com.dantum.daou.issue.IssueRepository;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.dantum.daou.exception.ErrorCode.NOT_EXIST_USER;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -27,39 +30,50 @@ public class UserService {
 
     private final VoteRepository voteRepository;
 
-    public ResponseEntity<Object> getUser(Long userIdx) {
+    public ResponseEntity<Object> getUser(Long userIdx) throws CustomException {
         User user = findById(userIdx);
 
-        UserDto userDto = UserDto.builder()
+        if (user == null){
+            throw new CustomException(NOT_EXIST_USER);
+        }
+        else {
+            UserDto userDto = UserDto.builder()
                 .user(user).build();
-
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
+        }
     }
 
-    public ResponseEntity<Object> getUserDetail(Long userIdx) {
+    public ResponseEntity<Object> getUserDetail(Long userIdx) throws CustomException {
         User user = findById(userIdx);
 
-        UserDetailDto userDetailDto = UserDetailDto.builder()
-                .user(user).build();
-
-        return ResponseEntity.status(HttpStatus.OK).body(userDetailDto);
+        if (user == null){
+            throw new CustomException(NOT_EXIST_USER);
+        }
+        else {
+            UserDetailDto userDetailDto = UserDetailDto.builder()
+                    .user(user).build();
+            return ResponseEntity.status(HttpStatus.OK).body(userDetailDto);
+        }
     }
 
-    public ResponseEntity<Object> updateUser(Long userIdx, UserRequestDto requestDto) {
+    public ResponseEntity<Object> updateUser(Long userIdx, UserRequestDto requestDto) throws CustomException {
         User user = findById(userIdx);
+        if (user == null){
+            throw new CustomException(NOT_EXIST_USER);
+        }
+        else {
 
-        UserUpdateDto userUpdateDto = UserUpdateDto.builder()
-                .requestDto(requestDto).build();
+            UserUpdateDto userUpdateDto = UserUpdateDto.builder()
+                    .requestDto(requestDto).build();
+            user.update(userUpdateDto);
 
-        user.update(userUpdateDto);
-
-        userRepository.save(user);
-
-        return ResponseEntity.status(HttpStatus.OK).body("Update success");
+            userRepository.save(user);
+            return ResponseEntity.status(HttpStatus.OK).body("Update success");
+        }
     }
 
     public User findById(Long userIdx) {
-        return userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
+        return userRepository.findById(userIdx).orElse(null);
     }
 
     // 유저 삭제
@@ -82,6 +96,4 @@ public class UserService {
 
         return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
     }
-
-
 }

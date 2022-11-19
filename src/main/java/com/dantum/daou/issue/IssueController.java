@@ -1,6 +1,7 @@
 package com.dantum.daou.issue;
 
 
+import com.dantum.daou.exception.CustomException;
 import com.dantum.daou.vote.VoteRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class IssueController {
 
     // 이슈 리스트 조회
     @GetMapping("/{userIdx}")
-    public List<IssueResponseDto> findAll(){
+    public List<IssueResponseDto> findAll() throws CustomException {
         return issueService.findAll();
     }
 
@@ -36,7 +37,7 @@ public class IssueController {
     @PatchMapping("/{issueIdx}")
     public ResponseEntity<Object> updateIssue(
             @PathVariable(name = "issueIdx") Long issueIdx,
-            @RequestBody IssueRequestDto requestDto) {
+            @RequestBody IssueRequestDto requestDto) throws CustomException {
         return issueService.updateIssue( issueIdx,requestDto);
     }
 

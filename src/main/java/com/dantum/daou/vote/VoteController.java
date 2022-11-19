@@ -1,7 +1,9 @@
 package com.dantum.daou.vote;
 
 
+import com.dantum.daou.exception.CustomException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +17,13 @@ public class VoteController {
     // 투표 리스트 조회
     @GetMapping("/votes/{userIdx}")
     public List<VoteResponseDto> findAll(){
+
         return voteService.findAll();
     }
 
     // 투표 상세 조회 api
     @GetMapping("/votes/details/{voteIdx}")
-    public ResponseEntity<Object> findVote(@PathVariable(name = "voteIdx") Long voteIdx){
+    public ResponseEntity<Object> findVote(@PathVariable(name = "voteIdx") Long voteIdx) throws CustomException {
         return voteService.showResponse(voteIdx);
     }
 

@@ -1,5 +1,6 @@
 package com.dantum.daou.voteValue;
 
+import com.dantum.daou.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class VoteValueController {
     }
 
     @GetMapping("/votes/values/{voteIdx}")
-    public ResponseEntity<Object> getVoteResult(@PathVariable Long voteIdx) {
+    public ResponseEntity<Object> getVoteResult(@PathVariable Long voteIdx) throws CustomException {
         return voteValueService.getVoteResult(voteIdx);
     }
 }

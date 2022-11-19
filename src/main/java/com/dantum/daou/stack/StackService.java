@@ -1,5 +1,6 @@
 package com.dantum.daou.stack;
 
+import com.dantum.daou.exception.CustomException;
 import com.dantum.daou.exception.DuplicateException;
 import com.dantum.daou.exception.ResourceNotFoundException;
 import com.dantum.daou.issue.Issue;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.dantum.daou.exception.ErrorCode.NOT_EXIST_STACK;
 
 @Transactional
 @Service
@@ -60,16 +63,22 @@ public class StackService {
     }
 
     @Transactional
-    public ResponseEntity<Object> updateStack(Long userIdx, Long stackIdx, StackDto stackDto) {
-        Stack stack = stackRepository.findById(stackIdx).orElseThrow(NullPointerException::new);
+    public ResponseEntity<Object> updateStack(Long userIdx, Long stackIdx, StackDto stackDto) throws CustomException {
+        Stack stack = stackRepository.findById(stackIdx).orElse(null);
 
-        if (stack.getStack().equals(stackDto.getStack())) {
-            throw new DuplicateException("Stack", "stack", stackDto.getStack());
+        if(stack == null){
+            throw new CustomException(NOT_EXIST_STACK); // 스택이 존재하지 않을 때
         }
 
-        stack.update(stackDto);
-        stackRepository.save(stack);
+        else {
+            if (stack.getStack().equals(stackDto.getStack())) {
+                throw new DuplicateException("Stack", "stack", stackDto.getStack());
+            }
 
+            stack.update(stackDto);
+            stackRepository.save(stack);
+
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
 

@@ -1,5 +1,6 @@
 package com.dantum.daou.stack;
 
+import com.dantum.daou.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class StackController {
     public ResponseEntity<Object> updateStack(
             @PathVariable("userIdx") Long userIdx,
             @RequestParam("stackIdx") Long stackIdx,
-            @RequestBody StackDto stackDto) {
+            @RequestBody StackDto stackDto) throws CustomException {
         return stackService.updateStack(userIdx, stackIdx, stackDto);
     }
 

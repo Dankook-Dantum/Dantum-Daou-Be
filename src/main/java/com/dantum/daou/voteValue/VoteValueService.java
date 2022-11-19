@@ -1,5 +1,6 @@
 package com.dantum.daou.voteValue;
 
+import com.dantum.daou.exception.CustomException;
 import com.dantum.daou.vote.Vote;
 import com.dantum.daou.vote.VoteService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.dantum.daou.exception.ErrorCode.NOT_EXIST_VOTE;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +33,19 @@ public class VoteValueService {
     }
 
     @Transactional
-    public ResponseEntity<Object> getVoteResult(Long voteIdx) {
+    public ResponseEntity<Object> getVoteResult(Long voteIdx) throws CustomException {
         Vote vote = voteService.findVote(voteIdx);
-        List<VoteValue> voteValueList = voteValueRepository.findByVote(vote);
 
-        VoteValueResponseDto voteValueResponseDto = VoteValueResponseDto.builder()
-                .voteValueList(voteValueList).build();
+        if (vote == null){
+            throw new CustomException(NOT_EXIST_VOTE);
+        }
+        else {
+            List<VoteValue> voteValueList = voteValueRepository.findByVote(vote);
 
-        return ResponseEntity.status(HttpStatus.OK).body(voteValueResponseDto);
+            VoteValueResponseDto voteValueResponseDto = VoteValueResponseDto.builder()
+                    .voteValueList(voteValueList).build();
+
+            return ResponseEntity.status(HttpStatus.OK).body(voteValueResponseDto);
+        }
     }
 }
