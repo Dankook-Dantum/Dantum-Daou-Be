@@ -13,6 +13,7 @@ public class UserRequestDto {
     private String name;
     private String profileUrl;
     private String email;
+    private String password;
     private String phone;
     private String position;
     private String office;
@@ -21,10 +22,11 @@ public class UserRequestDto {
     private String mbti;
 
     @Builder
-    public UserRequestDto(String name, String profileUrl, String email, String phone, String position, String office, String officeNumber, String introduce, String mbti) {
+    public UserRequestDto(String name, String profileUrl, String email, String password, String phone, String position, String office, String officeNumber, String introduce, String mbti) {
         this.name = name;
         this.profileUrl = profileUrl;
         this.email = email;
+        this.password = password;
         this.phone = phone;
         this.position = position;
         this.office = office;
