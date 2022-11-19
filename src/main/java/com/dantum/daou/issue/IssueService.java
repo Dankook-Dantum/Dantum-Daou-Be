@@ -41,10 +41,6 @@ public class IssueService {
         return ResponseEntity.status(HttpStatus.CREATED).body("create success");
     }
 
-
-
-
-
     // 이슈 리스트 조회
     public List<IssueResponseDto> findAll () {
         return issueRepository.findAll().stream()
@@ -52,14 +48,23 @@ public class IssueService {
                 .collect(Collectors.toList());
         }
 
-        // 이슈 삭제
-
+    // 이슈 삭제
     public ResponseEntity<Object> delete(Long id){
         Issue issue = issueRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Issue", "id",id));
         issueRepository.delete(issue);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
+    }
+
+    public ResponseEntity<Object> updateIssue(Long issueIdx, IssueRequestDto requestDto) {
+        Issue issue = issueRepository.findById(issueIdx).orElseThrow(NullPointerException::new);
+
+        issue.update(requestDto);
+
+        issueRepository.save(issue);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update success");
     }
 }
 
