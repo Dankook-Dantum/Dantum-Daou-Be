@@ -2,6 +2,7 @@ package com.dantum.daou.stack;
 
 import com.dantum.daou.user.User;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -36,4 +37,10 @@ public class Stack {
     @ManyToOne
     @JoinColumn(name="user_idx")
     private User user;
+
+    @Builder
+    public Stack(String stack, User user) {
+        this.stack = stack;
+        this.user = user;
+    }
 }
