@@ -1,18 +1,31 @@
 package com.dantum.daou.user;
 
 import com.dantum.daou.exception.ResourceNotFoundException;
+import com.dantum.daou.issue.Issue;
+import com.dantum.daou.issue.IssueRepository;
+import com.dantum.daou.stack.Stack;
+import com.dantum.daou.stack.StackRepository;
 import com.dantum.daou.vote.Vote;
+import com.dantum.daou.vote.VoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+
+    private final StackRepository stackRepository;
+
+    private final IssueRepository issueRepository;
+
+    private final VoteRepository voteRepository;
 
     public ResponseEntity<Object> getUser(Long userIdx) {
         User user = findById(userIdx);
@@ -51,8 +64,21 @@ public class UserService {
 
     // 유저 삭제
     public ResponseEntity<Object> delete(Long id){
+
+
+
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id",id));
+
+        List<Stack> stackList = user.getStacks();
+        List<Issue> issueList = user.getIssues();
+        List<Vote> voteList = user.getVotes();
+
+        stackRepository.deleteAll(stackList);
+        issueRepository.deleteAll(issueList);
+        voteRepository.deleteAll(voteList);
+
+
         userRepository.delete(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
