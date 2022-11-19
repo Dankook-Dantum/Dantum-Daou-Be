@@ -43,4 +43,8 @@ public class Stack {
         this.stack = stack;
         this.user = user;
     }
+
+    public void update(StackDto stackDto) {
+        this.stack = stackDto.getStack();
+    }
 }
