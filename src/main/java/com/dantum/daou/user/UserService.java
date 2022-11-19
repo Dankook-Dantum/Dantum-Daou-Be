@@ -13,7 +13,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public ResponseEntity<Object> getUser(Long userIdx) {
-        User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
+        User user = findById(userIdx);
 
         UserDto userDto = UserDto.builder()
                 .user(user).build();
@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public ResponseEntity<Object> getUserDetail(Long userIdx) {
-        User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
+        User user = findById(userIdx);
 
         UserDetailDto userDetailDto = UserDetailDto.builder()
                 .user(user).build();
@@ -31,7 +31,7 @@ public class UserService {
     }
 
     public ResponseEntity<Object> updateUser(Long userIdx, UserRequestDto requestDto) {
-        User user = userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
+        User user = findById(userIdx);
 
         UserUpdateDto userUpdateDto = UserUpdateDto.builder()
                 .requestDto(requestDto).build();
@@ -41,6 +41,10 @@ public class UserService {
         userRepository.save(user);
 
         return ResponseEntity.status(HttpStatus.OK).body("Update success");
+    }
+
+    public User findById(Long userIdx) {
+        return userRepository.findById(userIdx).orElseThrow(NullPointerException::new);
     }
 
 
