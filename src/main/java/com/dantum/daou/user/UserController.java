@@ -28,7 +28,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "유저 인덱스에 해당하는 유저 없음"),
             @ApiResponse(code = 500, message = "Server error")
     })
-    public ResponseEntity<Object> getUser(@PathVariable("userIdx") Long userIdx) throws CustomException {
+    public ResponseEntity<Object> getUser(@PathVariable("userIdx") Long userIdx) throws Exception {
         return userService.getUser(userIdx);
     }
 

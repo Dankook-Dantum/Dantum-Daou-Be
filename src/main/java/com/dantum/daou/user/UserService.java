@@ -6,6 +6,7 @@ import com.dantum.daou.issue.Issue;
 import com.dantum.daou.issue.IssueRepository;
 import com.dantum.daou.stack.Stack;
 import com.dantum.daou.stack.StackRepository;
+import com.dantum.daou.util.AesEncryptUtil;
 import com.dantum.daou.vote.Vote;
 import com.dantum.daou.vote.VoteRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,9 @@ public class UserService {
     private final IssueRepository issueRepository;
 
     private final VoteRepository voteRepository;
+    private final AesEncryptUtil aesEncryptUtil;
 
-    public ResponseEntity<Object> getUser(Long userIdx) throws CustomException {
+    public ResponseEntity<Object> getUser(Long userIdx) throws Exception {
         User user = findById(userIdx);
 
         if (user == null){
@@ -38,7 +40,7 @@ public class UserService {
         }
         else {
             UserDto userDto = UserDto.builder()
-                .user(user).build();
+                .user(user).aesEncryptUtil(aesEncryptUtil).build();
         return ResponseEntity.status(HttpStatus.OK).body(userDto);
         }
     }

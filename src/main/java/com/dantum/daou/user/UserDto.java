@@ -1,5 +1,6 @@
 package com.dantum.daou.user;
 
+import com.dantum.daou.util.AesEncryptUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,11 +25,11 @@ public class UserDto {
     private String officeNumber;
 
     @Builder
-    public UserDto(User user) {
+    public UserDto(User user, AesEncryptUtil aesEncryptUtil) throws Exception {
         this.userIdx = user.getUserIdx();
-        this.fullName = user.getName() + user.getPosition();
+        this.fullName = aesEncryptUtil.decryptAES256(user.getName()) + user.getPosition();
         this.profileUrl = user.getProfileUrl();
-        this.email = user.getEmail();
+        this.email = aesEncryptUtil.decryptAES256(user.getEmail());
         this.phone = user.getPhone();
         this.office = user.getOffice();
         this.officeNumber = user.getOfficeNumber();
