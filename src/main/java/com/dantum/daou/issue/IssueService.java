@@ -63,7 +63,7 @@ public class IssueService {
                 .orElseThrow(() -> new ResourceNotFoundException("Issue", "id",id));
         issueRepository.delete(issue);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("delete success");
     }
 
     public ResponseEntity<Object> updateIssue(Long issueIdx, IssueRequestDto requestDto) throws CustomException {

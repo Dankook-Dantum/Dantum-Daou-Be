@@ -88,6 +88,6 @@ public class StackService {
                 .orElseThrow(() -> new ResourceNotFoundException("Stack", "id",id));
         stackRepository.delete(stack);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("delete success");
     }
 }

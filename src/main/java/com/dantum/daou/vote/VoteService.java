@@ -76,6 +76,6 @@ public class VoteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Vote", "id",id));
         voteRepository.delete(vote);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("delete success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("delete success");
     }
 }
