@@ -58,7 +58,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<Object> updateUser(Long userIdx, UserRequestDto requestDto) throws CustomException {
+    public ResponseEntity<Object> updateUser(Long userIdx, UserRequestDto requestDto) throws Exception {
         User user = findById(userIdx);
         if (user == null){
             throw new CustomException(NOT_EXIST_USER);
@@ -66,7 +66,8 @@ public class UserService {
         else {
 
             UserUpdateDto userUpdateDto = UserUpdateDto.builder()
-                    .requestDto(requestDto).build();
+                    .requestDto(requestDto)
+                    .aesEncryptUtil(aesEncryptUtil).build();
             user.update(userUpdateDto);
 
             userRepository.save(user);

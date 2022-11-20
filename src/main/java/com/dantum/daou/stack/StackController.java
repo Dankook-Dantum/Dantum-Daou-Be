@@ -42,7 +42,7 @@ public class StackController {
     @ApiOperation(value = "스택 수정 API", notes = "유저 인덱스를 받아 해당 유저의 스택을 수정한다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userIdx", value = "유저 인덱스로 int형의 양의 정수만 받는다", example = "1", dataType = "int", paramType = "path"),
-            @ApiImplicitParam(name = "stackIdx", value = "스택 인덱스로 int형의 양의 정수만 받는다", example = "1", dataType = "int", paramType = "param")
+            @ApiImplicitParam(name = "stackIdx", value = "스택 인덱스로 int형의 양의 정수만 받는다", example = "1", dataType = "int", paramType = "query")
     })
     @ApiResponses({
             @ApiResponse(code = 200, message = "스택 수정 성공"),
@@ -60,7 +60,7 @@ public class StackController {
     // stack 삭제
     @DeleteMapping("/{stackIdx}")
     @ApiOperation(value = "스택 삭제 API", notes = "스택 인덱스를 받아 해당 스택을 삭제한다.")
-    @ApiImplicitParam(name = "stackIdx", value = "스택 인덱스로 int형으로 양의 정수만 받는다", example = "1", dataType = "int", paramType = "param")
+    @ApiImplicitParam(name = "stackIdx", value = "스택 인덱스로 int형으로 양의 정수만 받는다", example = "1", dataType = "int", paramType = "query")
     @ApiResponses({
             @ApiResponse(code = 204, message = "스택 삭제 성공"),
             @ApiResponse(code = 400, message = "잘못된 스택 인덱스 입력"),

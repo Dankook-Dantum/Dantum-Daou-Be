@@ -1,5 +1,6 @@
 package com.dantum.daou.user;
 
+import com.dantum.daou.util.AesEncryptUtil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +20,11 @@ public class UserUpdateDto {
     private String mbti;
 
     @Builder
-    public UserUpdateDto(UserRequestDto requestDto) {
-        this.name = requestDto.getName();
+    public UserUpdateDto(UserRequestDto requestDto, AesEncryptUtil aesEncryptUtil) throws Exception {
+        this.name = aesEncryptUtil.encryptAES256(requestDto.getName());
         this.profileUrl = requestDto.getProfileUrl();
-        this.email = requestDto.getEmail();
-        this.password = requestDto.getPassword();
+        this.email = aesEncryptUtil.encryptAES256(requestDto.getEmail());
+        this.password = aesEncryptUtil.encryptAES256(requestDto.getPassword());
         this.phone = requestDto.getPhone();
         this.position = requestDto.getPosition();
         this.office = requestDto.getOffice();
